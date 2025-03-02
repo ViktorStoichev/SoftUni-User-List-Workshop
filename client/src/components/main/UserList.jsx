@@ -1,6 +1,21 @@
+import { useEffect, useState } from "react";
+import userService from "../../services/userService";
 import User from "./User";
 
 export default function UserList() {
+    const [users, setUsers] = useState([]);
+    
+    useEffect(() => {
+        userService.getAll()
+            .then(result => {
+                setUsers(result);
+            })
+    }, [])
+
+    useEffect(() => {
+        console.log(users);
+    }, [users])
+
     return (
         <>
             <div className="table-wrapper">
@@ -165,7 +180,7 @@ export default function UserList() {
                     </thead>
                     <tbody>
                         {/* Table row component */}
-                        <User />
+                        {users.map(user => <User key={user._id} user={user}/>)}
                     </tbody>
                 </table>
             </div>
