@@ -1,3 +1,5 @@
+import formatDate from "../../utils/formatDate";
+
 export default function User({user}) {
     return (
         <>
@@ -13,7 +15,7 @@ export default function User({user}) {
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
                 <td>{user.phoneNumber}</td>
-                <td>{user.createdAt}</td>
+                <td>{formatDate(user.createdAt)}</td>
                 <td className="actions">
                     <button className="btn edit-btn" title="Edit">
                         <svg
