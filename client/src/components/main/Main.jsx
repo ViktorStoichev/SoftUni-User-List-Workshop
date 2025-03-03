@@ -7,8 +7,12 @@ import CreateUser from "./CreateUser";
 export default function Main() {
     const [showAddUser, setShowAddUser] = useState(false);
 
-    const addUserClickHandler = () => {
+    const createUserClickHandler = () => {
         setShowAddUser(true);
+    }
+
+    const closeCreateUserClickHandler = () => {
+        setShowAddUser(false);
     }
 
     return (
@@ -16,13 +20,13 @@ export default function Main() {
             <main className="main">
                 {/* Section component  */}
                 <section className="card users-container">
-                    {showAddUser && <CreateUser />}
+                    {showAddUser && <CreateUser onClose={closeCreateUserClickHandler} />}
                     {/* Search bar component */}
                     <Search />
                     {/* Table component */}
                     <UserList />
                     {/* New user button  */}
-                    <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
+                    <button className="btn-add btn" onClick={createUserClickHandler}>Add new user</button>
                     {/* Pagination component  */}
                     <Pagination />
                 </section>
