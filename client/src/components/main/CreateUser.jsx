@@ -1,4 +1,4 @@
-export default function CreateUser({ onClose }) {
+export default function CreateUser({ onClose, onSave }) {
     return (
         <>
             <div class="overlay">
@@ -16,7 +16,7 @@ export default function CreateUser({ onClose }) {
                                 </svg>
                             </button>
                         </header>
-                        <form>
+                        <form onSubmit={onSave}>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="firstName">First name</label>

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import userService from "../../services/userService";
 import User from "./User";
+import CreateUser from "./CreateUser";
+import Details from "./Details";
 
 export default function UserList() {
     const [users, setUsers] = useState([]);
-    
+    const [showAddUser, setShowAddUser] = useState(false);
+    const [userIdInfo, setUserIdInfo] = useState(null);
+
     useEffect(() => {
         userService.getAll()
             .then(result => {
@@ -12,8 +16,38 @@ export default function UserList() {
             })
     }, []);
 
+    const createUserClickHandler = () => {
+        setShowAddUser(true);
+    }
+
+    const closeCreateUserClickHandler = () => {
+        setShowAddUser(false);
+    }
+
+    const saveCreateUserClickHandler = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const formValues = Object.fromEntries(formData);
+
+        const newUser = await userService.create(formValues);
+
+        setUsers(state => [...state, newUser]);
+
+        setShowAddUser(false);
+    }
+
+    const userInfoClickHandler = (userId) => {
+        setUserIdInfo(userId);
+    }
+
     return (
         <>
+            {showAddUser && (<CreateUser
+                onClose={closeCreateUserClickHandler}
+                onSave={saveCreateUserClickHandler} />)}
+
+            {userIdInfo && (<Details userId={userIdInfo}/>)}       
             <div className="table-wrapper">
                 {/* Overlap components  */}
                 {/* <div class="loading-shade"> */}
@@ -176,10 +210,16 @@ export default function UserList() {
                     </thead>
                     <tbody>
                         {/* Table row component */}
-                        {users.map(user => <User key={user._id} user={user}/>)}
+                        {users.map(user => <User
+                            key={user._id} 
+                            user={user} 
+                            onInfoClick={() => userInfoClickHandler(user._id)}
+                        />)}
                     </tbody>
                 </table>
-            </div> 
+            </div>
+            {/* New user button  */}
+            <button className="btn-add btn" onClick={createUserClickHandler}>Add new user</button>
         </>
     );
 }

@@ -1,6 +1,6 @@
 import formatDate from "../../utils/formatDate";
 
-export default function User({user}) {
+export default function User({ user, onInfoClick }) {
     return (
         <>
             <tr>
@@ -51,7 +51,7 @@ export default function User({user}) {
                             ></path>
                         </svg>
                     </button>
-                    <button className="btn info-btn" title="Info">
+                    <button className="btn info-btn" title="Info" onClick={onInfoClick}>
                         <svg
                             aria-hidden="true"
                             focusable="false"
