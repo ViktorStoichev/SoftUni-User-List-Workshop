@@ -1,12 +1,12 @@
 import formatDate from "../../utils/formatDate";
 
-export default function User({ user, onInfoClick }) {
+export default function User({ user, onInfoClick, onDeleteClick, onEditClick }) {
     return (
         <>
             <tr>
                 <td>
                     <img
-                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                        src={user.imageUrl}
                         alt="Peter's profile"
                         className="image"
                     />
@@ -17,7 +17,7 @@ export default function User({ user, onInfoClick }) {
                 <td>{user.phoneNumber}</td>
                 <td>{formatDate(user.createdAt)}</td>
                 <td className="actions">
-                    <button className="btn edit-btn" title="Edit">
+                    <button className="btn edit-btn" title="Edit" onClick={onEditClick}>
                         <svg
                             aria-hidden="true"
                             focusable="false"
@@ -34,7 +34,7 @@ export default function User({ user, onInfoClick }) {
                             ></path>
                         </svg>
                     </button>
-                    <button className="btn delete-btn" title="Delete">
+                    <button className="btn delete-btn" title="Delete" onClick={() => onDeleteClick(user._id)}>
                         <svg
                             aria-hidden="true"
                             focusable="false"

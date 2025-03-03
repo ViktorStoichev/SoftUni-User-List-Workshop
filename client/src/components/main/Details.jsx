@@ -32,7 +32,7 @@ export default function Details({ userId, onClose }) {
                         </header>
                         <div class="content">
                             <div class="image-container">
-                                <img src={user.img} alt=""
+                                <img src={user.imageUrl} alt=""
                                     class="image" />
                             </div>
                             <div class="user-details">
@@ -45,7 +45,7 @@ export default function Details({ userId, onClose }) {
                                 <p>Phone Number: <strong>{user.phoneNumber}</strong></p>
                                 <p>
                                     Address:
-                                    <strong> {user.country}, {user.city}, {user.street} {user.streetNumber} </strong>
+                                    <strong> {user.address?.country}, {user.address?.city}, {user.address?.street} {user.address?.streetNumber} </strong>
                                 </p>
 
                                 <p>Created on: <strong>{formatDate(user.createdAt)}</strong></p>

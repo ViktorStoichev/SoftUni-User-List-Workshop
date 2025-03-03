@@ -15,22 +15,52 @@ export default {
         return user;
     },
     async create(data) {
-        const { country, city, street, streetNumber, ...postdata} = data;
-
-        postdata.address = { country, city, street, streetNumber };
-        postdata.createdAt = new Date().toISOString();
-        postdata.updatedAt = new Date().toISOString();
+        const postData = transformUserData(data);
 
         const response = await fetch(baseUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(postdata),
+            body: JSON.stringify(postData),
         });
 
         const result = await response.json();
 
         return result;
+    },
+    async delete(id) {
+        const response = await fetch(`${baseUrl}/${id}`, {
+            method: 'DELETE'
+        });
+        const result = await response.json();
+
+        return result;
+    },
+    async update(id, data) {
+        const postData = transformUserData(data);
+        postData._id = id;
+
+        const response = await fetch(`${baseUrl}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        })
+
+        const result = await response.json();
+
+        return result;
     }
+}
+
+function transformUserData(data) {
+    const { country, city, street, streetNumber, ...transformedData} = data;
+
+    transformedData.address = { country, city, street, streetNumber };
+    transformedData.createdAt = new Date().toISOString();
+    transformedData.updatedAt = new Date().toISOString();
+
+    return transformedData;
 }
