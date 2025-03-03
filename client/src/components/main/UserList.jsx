@@ -10,11 +10,7 @@ export default function UserList() {
             .then(result => {
                 setUsers(result);
             })
-    }, [])
-
-    useEffect(() => {
-        console.log(users);
-    }, [users])
+    }, []);
 
     return (
         <>
@@ -183,9 +179,7 @@ export default function UserList() {
                         {users.map(user => <User key={user._id} user={user}/>)}
                     </tbody>
                 </table>
-            </div>
-            {/* New user button  */}
-            <button className="btn-add btn">Add new user</button>
+            </div> 
         </>
     );
 }
